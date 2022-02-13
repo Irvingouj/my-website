@@ -5,3 +5,9 @@
   border-style: solid;
   border-color: black;
 }
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
