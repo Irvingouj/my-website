@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import './BlogPage.css' 
 
 function BlogPage() {
+ 
+  const [markdown,setMarkdown] = useState("# test")
   return (
     <div id="markdownWrapper">
-        <ReactMarkdown children={"# *hello Markdown* \n look this is a blog"} />
+        <ReactMarkdown children= {markdown} />
     </div>
   )
 }
