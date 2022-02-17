@@ -1,3 +1,6 @@
+- [ ] learn typecript
+- [ ] learn nest.js
+- [ ] using Opena Api and swagger to generate server and client code (learn open api)
 - [ ] creating fake markdown 
 - [ ] fake backend service
 - [ ] enable link to real blog
