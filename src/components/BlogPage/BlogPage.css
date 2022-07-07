@@ -1,0 +1,14 @@
+.BlogPage {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.BlogPage>*{
+  box-sizing: border-box;
+}
+
+#card_warpper {
+  width: 70%;
+  display: block;
+  float: left;
+}

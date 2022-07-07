@@ -1,0 +1,13 @@
+.Blog {
+    grid-gap: 3rem;
+    display: grid;
+    gap: 3rem;
+    grid-template-areas: "sidebar main toc";
+    grid-template-columns: minmax(0,1fr) minmax(0,2.5fr) minmax(0,15rem);
+    padding-left: 1rem;
+    padding-right: 1rem;display: grid;
+}
+
+.side_palce_holder{
+
+}

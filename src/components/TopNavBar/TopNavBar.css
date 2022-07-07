@@ -5,6 +5,9 @@ nav {
     min-height: 10vh;
     background-color: lightblue;
     color: white;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-top);
 }
 
 .nav-links{
