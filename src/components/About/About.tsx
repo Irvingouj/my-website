@@ -1,7 +1,17 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 
 function About() {
-  return <h1>ABOUT</h1>;
+
+  let markdown = "## About\n\n"
+
+  return (
+    <div className="About">
+      <ReactMarkdown>
+        {markdown}
+      </ReactMarkdown>
+    </div>
+  )
 }
 
 export default About;

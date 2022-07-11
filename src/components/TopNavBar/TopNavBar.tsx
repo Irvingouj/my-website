@@ -4,12 +4,11 @@ import './TopNavBar.css'
 
 function TopNavBar() {
   return (
-    <nav>
+    <nav id='nav'>
       <Link className='nav-links' to={'/'}>home</Link>
       <Link className='nav-links'  to={'/about'} > about</Link>
       <Link className='nav-links'  to={'/BlogPage'} > blog </Link>
-     
-  </nav>
+    </nav>
 )
 }
 
