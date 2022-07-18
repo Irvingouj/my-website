@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FILE_URL } from "../../properties";
-import Blog from "../Blog/Blog";
 import BlogSide from "../BlogSide/BlogSide";
 import Card from "../Card/Card";
 import "./BlogPage.css";
+import {useDispatch, useSelector} from "react-redux";
 
 interface BlogPageProps {}
 
@@ -33,11 +33,17 @@ const BlogPage: FC<BlogPageProps> = () => {
       });
     // debugger;
   }
+
+  
+
+  const onClick = (id: number) => {
+    
+  }
   const cardList = () => {
     return blog.map((i) => {
       return (
         <div key={i.id}>
-          <Link to={i.title}>
+          <Link to={i.title} onClick={() => onClick}>
             <Card summary={i} />
           </Link>
         </div>

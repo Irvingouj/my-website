@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import TopNavBar from "./components/TopNavBar/TopNavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -7,6 +5,8 @@ import About from "./components/About/About";
 import Home from "./Home";
 import BlogPage from "./components/BlogPage/BlogPage";
 import BlogDetail from "./components/BlogDetail/BlogDetail";
+
+
 function App() {
   return (
     <Router>
