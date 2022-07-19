@@ -5,6 +5,8 @@ import BlogSide from "../BlogSide/BlogSide";
 import Card from "../Card/Card";
 import "./BlogPage.css";
 import {useDispatch, useSelector} from "react-redux";
+import { actionCreators } from '../../state';
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 interface BlogPageProps {}
 
@@ -16,7 +18,8 @@ export interface BlogSummary {
 const BlogPage: FC<BlogPageProps> = () => {
   const str = "# test";
 
-  const [blog, setBlog] = React.useState<BlogSummary[]>([]);
+  const [blogs, setBlogs] = React.useState<BlogSummary[]>([]);
+  const {setBlog,removeBlog} = bindActionCreators(actionCreators, useDispatch());
 
   useEffect(() => {
     getData();
@@ -34,16 +37,14 @@ const BlogPage: FC<BlogPageProps> = () => {
     // debugger;
   }
 
-  
-
   const onClick = (id: number) => {
-    
+    setBlog("1");
   }
   const cardList = () => {
-    return blog.map((i) => {
+    return blogs.map((i) => {
       return (
-        <div key={i.id}>
-          <Link to={i.title} onClick={() => onClick}>
+        <div key={i.id} onClick={()=> onClick(i.id)}>
+          <Link to={i.title} >
             <Card summary={i} />
           </Link>
         </div>
