@@ -6,7 +6,7 @@ export interface stringState {
 }
 
 export const initState:stringState = {
-    value:"value"
+    value:"0"
 }
 
 export const blogReducer = (state:stringState = initState,action:BlogAction) => {

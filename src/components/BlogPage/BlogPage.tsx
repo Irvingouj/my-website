@@ -23,22 +23,21 @@ const BlogPage: FC<BlogPageProps> = () => {
 
   useEffect(() => {
     getData();
-  });
+  },[]);
 
   async function getData() {
     fetch(FILE_URL)
       .then((res) => res.json())
       .then((data) => {
-        setBlog(data);
+        setBlogs(data);
       })
       .catch((err) => {
         console.log(err);
       });
-    // debugger;
   }
 
   const onClick = (id: number) => {
-    setBlog("1");
+    setBlog(id.toString());
   }
   const cardList = () => {
     return blogs.map((i) => {
