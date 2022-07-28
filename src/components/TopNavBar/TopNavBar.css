@@ -1,0 +1,25 @@
+#top-nav-bar{
+    background-color: #f2d480;
+    border-bottom: 1px solid #f29b80;
+    height: 50px;
+    line-height: 50px;
+    position: sticky;
+    width: 100%;
+    z-index: 1;
+}
+
+.warpper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.link{
+    margin-left: auto;
+    margin-right: auto;
+}
+

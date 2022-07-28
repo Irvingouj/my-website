@@ -1,14 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TopNavBar from './components/TopNavBar';
+import TopNavBar from './components/TopNavBar/TopNavBar';
+import Home from './components/Home/Home';
+import About from './components/About/About';
+import Contact from './components/Contact/Contact';
 function App() {
   return (
     <div className="App">
       <TopNavBar/>
-      <header className="App-header">
-        <h1> see what this looks like</h1>
-      </header>
+      <Home/>
+      <About/>
+      <Contact/>
     </div>
   );
 }
