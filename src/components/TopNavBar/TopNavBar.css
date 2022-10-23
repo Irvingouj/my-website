@@ -5,6 +5,8 @@
     line-height: 50px;
     position: sticky;
     width: 100%;
+    text-align: center;
+    position:fixed;
     z-index: 1;
 }
 
@@ -18,8 +20,15 @@
     margin-right: auto;
 }
 
-.link{
-    margin-left: auto;
-    margin-right: auto;
+.warpper li{
+    display: inline-block;
 }
 
+.warpper a{
+    padding: 0.2em 1em 0.2em 1em;
+    margin: 0.6em 0.2em 0.6em 0.2em;
+    font-weight: 600;
+    color: #f29b80;
+    text-decoration: none;
+    border-radius: 8px;
+}

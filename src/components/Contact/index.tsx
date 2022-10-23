@@ -5,7 +5,8 @@ interface ContactProps {}
 
 const Contact: FC<ContactProps> = () => (
   <div className="Contact" id="contact">
-    Contact Component
+    <h1>Contact</h1>
+    {/* links to different sites */}
   </div>
 );
 
