@@ -9,7 +9,7 @@ const About: FC<AboutProps> = () => (
     <h2>If you're looking for a good candinate, I'm the one</h2>
       <p>here's the exprience and things I do</p>
     <Post/>
-    <Post/>
+    <Post component='DrawGraph'/>
     <Post/>
   </div>
 );

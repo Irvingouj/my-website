@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Postpage from "./components/Postpage";
+import Postpage from "./pages/Postpage";
+import DrawGraph from "./pages/DrawGraph/DrawGraph";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,6 +13,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/Postpage" element={<Postpage />} />
+        <Route path="/DrawGraph" element={<DrawGraph />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

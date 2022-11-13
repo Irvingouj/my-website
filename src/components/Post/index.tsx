@@ -7,7 +7,7 @@ interface PostProps {
   img?: string;
   title?: string;
   description?: string;
-  url?: string;
+  component?: string;
 }
 
 const Post: FC<PostProps> = (prop: PostProps) => {
@@ -18,7 +18,7 @@ const Post: FC<PostProps> = (prop: PostProps) => {
       <div>
         <h2>{prop.title}</h2>
         <p>{prop.description}</p>
-        <Link to="/Postpage" target="_blank" rel="noopener noreferrer">
+        <Link to={prop.component!} target="_blank" rel="noopener noreferrer">
           <button type="button">
             more
           </button>
@@ -32,6 +32,7 @@ Post.defaultProps = {
   img: "logo512.png",
   title: "title",
   description: "description",
+  component:"/Postpage"
 };
 
 export default Post;

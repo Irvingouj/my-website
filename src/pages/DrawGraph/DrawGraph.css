@@ -1,0 +1,12 @@
+.DrawGraph {
+    width: 100vh;
+    text-align: center;
+    height: 100vh;
+}
+
+iframe {
+    height: 50%;
+    width: 50%;
+    resize: both;
+    overflow: auto;
+  }
