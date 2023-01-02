@@ -9,7 +9,10 @@
       "withStyle": true,
       "withTest": false,
       "withStory": false,
-      "withLazy": false
+      "withLazy": false,
+      "customTemplates": {
+        "index": "templates/default/index.js",
+      }
     },
     "page": {
       "path": "src/pages",
