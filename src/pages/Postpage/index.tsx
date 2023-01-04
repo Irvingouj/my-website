@@ -1,28 +1,40 @@
-import React, { FC, useEffect, useState } from 'react';
-import { getMarkdown, Markdown } from '../../utils/network';
-import './Postpage.css';
-import ReactMarkdown from 'react-markdown'
+import React, { FC, useEffect, useState } from "react";
+import {getMarkdownList} from "../../utils/network";
+import "./Postpage.css";
+import SideNavBar from "../../components/SideNavBar";
+import MarkdownDisplay from "../../components/MarkdownDisplay";
+import { createBrowserRouter } from "react-router-dom";
 
 interface PostpageProps {}
 
-const Postpage: FC<PostpageProps> = () => {
-  const [markdown, setMarkdown] = useState<Markdown>({Content:"#something"} as Markdown);
-  const id = "1";
-  useEffect(() => {
-    const fetchMarkdown = async () => {
-      const markdown = await getMarkdown(id);
-      console.log(markdown);
-      setMarkdown(markdown);
-    }
-    fetchMarkdown();
-    setMarkdown(markdown);
-  }, [id])
+export type truncatedMarkdown = {
+  ID: string;
+  Title:string;
+};
 
-  return (<div className="Postpage">
-    <ReactMarkdown>
-      {markdown!.Content}
-    </ReactMarkdown>
-  </div>)
+
+
+const Postpage: FC<PostpageProps> = () => {
+  const [markdownList, setMarkdownList] = useState<truncatedMarkdown[]>([]);
+  const [currentId, setCurrentId] = useState<number>(1);
+
+  useEffect(() => {
+    const fetchMarkdowns = async () => {
+      const markdown = await getMarkdownList();
+      console.log(markdown);
+      setMarkdownList(markdown);
+    };
+    fetchMarkdowns();
+  }, []);
+    
+  return (
+    <div className="Postpage">
+      <div id="main-wrapper">
+        <SideNavBar list = {markdownList} jumpFunction = {setCurrentId}/>
+        <MarkdownDisplay id={String(currentId)} />
+      </div>
+    </div>
+  );
 };
 
 export default Postpage;

@@ -4,7 +4,7 @@ import "./TopNavBar.css";
 function TopNavBar() {
   return (
     <div id="top-nav-bar">
-      <div className="warpper">
+      <div className="wrapper">
         <li>
           <a href="#home">Home</a>
         </li>

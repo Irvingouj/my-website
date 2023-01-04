@@ -13,6 +13,7 @@ interface PostProps {
 const Post: FC<PostProps> = (prop: PostProps) => {
   
   return (
+    
     <div className="Post">
       <img src={prop.img} alt="" />
       <div>

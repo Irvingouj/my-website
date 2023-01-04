@@ -1,21 +1,11 @@
 {
   "usesTypeScript": true,
-  "usesCssModule": false,
+  "usesCssModule": true,
   "cssPreprocessor": "css",
   "testLibrary": "None",
   "component": {
     "default": {
       "path": "src/components",
-      "withStyle": true,
-      "withTest": false,
-      "withStory": false,
-      "withLazy": false,
-      "customTemplates": {
-        "index": "templates/default/index.js",
-      }
-    },
-    "page": {
-      "path": "src/pages",
       "withStyle": true,
       "withTest": false,
       "withStory": false,

@@ -1,1 +1,11 @@
-.Postpage {}
+
+
+#main-wrapper{
+    grid-gap: 3rem;
+    display: grid;
+    gap: 3rem;
+    grid-template-areas: "sidebar main";
+    grid-template-columns: minmax(0,1fr) minmax(0,2fr);
+    padding-left: 1.5rem;
+    padding-right: 3rem;
+}

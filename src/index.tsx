@@ -18,6 +18,11 @@ ReactDOM.render(
             <Postpage />
           </React.Suspense>
         } />
+        <Route path="/Postpage/editor"  element = {
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <Postpage />
+          </React.Suspense>
+        }/>
         <Route path="/DrawGraph" element={
           <React.Suspense fallback={<div>Loading...</div>}>
             <DrawGraph />

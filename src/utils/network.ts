@@ -5,6 +5,12 @@ export const  getMarkdown = async (id: string):Promise<Markdown> => {
     .then(res => res.json());
 }
 
+// todo: only fetch the list of markdowns
+export const getMarkdownList = async ():Promise<Markdown[]> => {
+    return await fetch(`${BackEndHostName}${MarkdownPath}`)
+    .then(res => res.json());
+}
+
 export interface Markdown {
     ID: string;
     Title: string;

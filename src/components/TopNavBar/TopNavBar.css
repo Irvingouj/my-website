@@ -10,7 +10,7 @@
     z-index: 1;
 }
 
-.warpper{
+.wrapper{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -20,11 +20,11 @@
     margin-right: auto;
 }
 
-.warpper li{
+.wrapper li{
     display: inline-block;
 }
 
-.warpper a{
+.wrapper a{
     padding: 0.2em 1em 0.2em 1em;
     margin: 0.6em 0.2em 0.6em 0.2em;
     font-weight: 600;
