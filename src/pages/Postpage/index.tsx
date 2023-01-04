@@ -4,6 +4,7 @@ import "./Postpage.css";
 import SideNavBar from "../../components/SideNavBar";
 import MarkdownDisplay from "../../components/MarkdownDisplay";
 import { createBrowserRouter } from "react-router-dom";
+import MarkdownTopNavBar from "../../components/MarkdownTopNavBar";
 
 interface PostpageProps {}
 
@@ -29,6 +30,7 @@ const Postpage: FC<PostpageProps> = () => {
     
   return (
     <div className="Postpage">
+      <MarkdownTopNavBar/>
       <div id="main-wrapper">
         <SideNavBar list = {markdownList} jumpFunction = {setCurrentId}/>
         <MarkdownDisplay id={String(currentId)} />

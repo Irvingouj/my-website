@@ -20,7 +20,7 @@ const MarkdownDisplay: FC<MarkdownDisplayProps> = (props:MarkdownDisplayProps) =
     setMarkdown(markdown);
   }, [id])
 
-  return (<div className="Postpage">
+  return (<div className={styles.MarkdownDisplay}>
     <ReactMarkdown>
       {markdown!.Content}
     </ReactMarkdown>

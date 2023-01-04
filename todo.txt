@@ -1,4 +1,4 @@
 1. markdown fetch filter 
 2. markdown global search
 3. markdown collections 
-4. identity service and access right
+4. identity service
