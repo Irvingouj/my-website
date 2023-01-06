@@ -1,4 +1,16 @@
-1. markdown fetch filter 
-2. markdown global search
-3. markdown collections 
-4. identity service
+1. markdown fetch filter [done]
+2. markdown global search 
+    - looking for finishing on Jan 5 [done]
+3. markdown collections
+    - looking for finishing on Jan 6
+4. Markdown editor (wasm)
+    - looking for finishing on Jan 10
+5. identity service
+    - looking for finishing on Jan 15
+6. Graph
+    - looking for finishing on Jan 17
+7. ChatGPT for answering questions about me
+    - looking for finishing on Jan 18
+7. design
+    - looking for finishing on Jan 20
+
