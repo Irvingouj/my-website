@@ -11,6 +11,9 @@
 # production
 /build
 
+# wasm output
+/pkg
+
 /wasm-editor/target
 # misc
 .DS_Store
