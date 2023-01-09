@@ -4,6 +4,7 @@
 3. markdown collections
     - looking for finishing on Jan 6
 4. Markdown editor (wasm)
+    - plan changed, use existing react editor lab
     - looking for finishing on Jan 10
 5. identity service
     - looking for finishing on Jan 15

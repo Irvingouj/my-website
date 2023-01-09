@@ -4,9 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Editor from "./components/Editor";
-
-const Postpage = React.lazy(() => import("./pages/Postpage"));
 const DrawGraph = React.lazy(() => import("./pages/DrawGraph/DrawGraph"));
 
 ReactDOM.render(
@@ -14,16 +11,6 @@ ReactDOM.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/Postpage" element={
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Postpage />
-          </React.Suspense>
-        } />
-        <Route path="/Postpage/editor"  element = {
-          <React.Suspense fallback={<div>Loading...</div>}>
-            <Editor />
-          </React.Suspense>
-        }/>
         <Route path="/DrawGraph" element={
           <React.Suspense fallback={<div>Loading...</div>}>
             <DrawGraph />
