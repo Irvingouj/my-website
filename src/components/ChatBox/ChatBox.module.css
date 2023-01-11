@@ -1,0 +1,6 @@
+.ChatBox {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    width: 100%;
+}
