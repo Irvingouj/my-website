@@ -1,17 +1,4 @@
-1. markdown fetch filter [done]
-2. markdown global search 
-    - looking for finishing on Jan 5 [done]
-3. markdown collections
-    - looking for finishing on Jan 6
-4. Markdown editor (wasm)
-    - plan changed, use existing react editor lab
-    - looking for finishing on Jan 10
-5. identity service
-    - looking for finishing on Jan 15
-6. Graph
-    - looking for finishing on Jan 17
-7. ChatGPT for answering questions about me
-    - looking for finishing on Jan 18
-7. design
-    - looking for finishing on Jan 20
+1. redesign the website with given html css documents
+2. finish tic tac toe with drawing
+3. finish chat bot
 
