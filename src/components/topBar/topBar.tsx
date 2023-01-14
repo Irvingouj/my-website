@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
+import { GetText } from '../../utils/TextSource';
 import styles from './topBar.module.css';
 
 interface TopBarProps {}
 
 const TopBar: FC<TopBarProps> = () => (
   <div className="w indtop">
-		<div className="fl logo"><img src="logo.png" /></div>
-		<div className="pc_fr tel"><img src="01.png" />+132 459 05 6540</div>
+		<div className="fl logo"><img src="irving-ou.svg" /></div>
+		<div className="pc_fr tel"><img src="01.png" />{GetText.phone()}</div>
 		<div className="fr menu">
 			<a href="#" className="nav__trigger"><span className="nav__icon"></span></a>
 			<nav className="nav">

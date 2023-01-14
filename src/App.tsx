@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <About />
       <GameWrapper/>
-      <PhotoWall/>
+      {/* <PhotoWall/> */}
       <LinksWrapper/>
       <GameIntro/>
       <Contacts/>
