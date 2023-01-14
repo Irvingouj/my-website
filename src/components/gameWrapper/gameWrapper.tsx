@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import Game from '../Game/Game';
-import styles from './gameWrapper.module.css';
+import "./gameWrapper.css"
 
 interface GameWrapperProps {}
 

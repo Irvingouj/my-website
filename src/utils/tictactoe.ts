@@ -46,31 +46,35 @@ export const ComputerPlay = (board:Array<SquareValue>, index:number, player:Squa
 export function DrawBoard(ctx: CanvasRenderingContext2D) {
   
 
-  var width = ctx.canvas.width;
+  var width = ctx.canvas.width - 200;
   var height = ctx.canvas.height;
   ctx.strokeStyle = 'black';
   ctx.lineWidth = 5;
 
   ctx.beginPath();
-  ctx.moveTo(width / 3, 0);
-  ctx.lineTo(width / 3, height);
+  ctx.moveTo(width / 3+100, 0);
+  ctx.lineTo(width / 3+100, height);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(2*width / 3, 0);
-  ctx.lineTo(2*width / 3, height);
+  ctx.moveTo(2*width / 3+100, 0);
+  ctx.lineTo(2*width / 3+100, height);
   ctx.stroke();
 
   ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.moveTo(0, height / 3);
-  ctx.lineTo(width, height / 3);
+  ctx.moveTo(0+100, height / 3);
+  ctx.lineTo(width+100, height / 3);
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(0, 2*height / 3);
-  ctx.lineTo(width, 2*height / 3);
+  ctx.moveTo(0+100, 2*height / 3);
+  ctx.lineTo(width+100, 2*height / 3);
   ctx.stroke();
 
 }
     
+export const OffBoard = (x:number, y:number):boolean => {
+    if(x<100 || x>300) return true;
+    else return false;
+}
