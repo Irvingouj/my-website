@@ -1,6 +1,16 @@
 
 export type Player = 'X' | 'O';
 export type SquareValue = Player | null;
+const winningLines = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 export interface GameBoard {
   squares: [SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue];
 }
@@ -11,16 +21,7 @@ export const DefaultGameBoard: GameBoard = {
 
 // check if a player has won
 export const PlayerWins = (board: Array<SquareValue>, player: Player): boolean => {
-  const winningLines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
+  
   for (let i = 0; i < winningLines.length; i++) {
     const [a, b, c] = winningLines[i];
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -94,4 +95,14 @@ function minimax(board: GameBoard, computer: string, human: string, emptySquares
 
 export const IsGameOver = (board: GameBoard): boolean => {
   return GameOver(board.squares);
+}
+
+export const GetWinnerLine = (board: GameBoard): [number,number] => {
+  for (let i = 0; i < winningLines.length; i++) {
+    const [a, b, c] = winningLines[i];
+    if (board.squares[a] && board.squares[a] === board.squares[b] && board.squares[a] === board.squares[c]) {
+      return [a,c];
+    }
+  }
+  return [-1,-1];
 }

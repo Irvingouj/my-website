@@ -1,6 +1,7 @@
 import { line } from "d3";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { ComputerPlay, DefaultGameBoard, DrawBoard, GameBoard, GameOver, IsGameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
+import { Canvas } from "../../utils/canvas";
+import { ComputerPlay, DefaultGameBoard, DrawBoard, GameBoard, GameOver, GetWinnerLine, IsGameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
 import styles from "./Game.module.css";
 
 interface GameProps { }
@@ -9,6 +10,7 @@ type Position = {
   x: number;
   y: number;
 };
+
 
 const Game: FC<GameProps> = () => {
   const [board, setBoard] = useState<GameBoard>(DefaultGameBoard);
@@ -96,8 +98,17 @@ const Game: FC<GameProps> = () => {
 
   const gameOver = () => {
     const ctx = getCanvas();
-    ctx.font = "30px Arial";
-    ctx.fillText("Game Over", 10, 50);
+    var winningLine = GetWinnerLine(board);
+    if (winningLine[0]!==-1 && winningLine[1]!==-1) {
+      ctx.beginPath();
+      const start = blockToCenterPosition(winningLine[0]);
+      const end = blockToCenterPosition(winningLine[1]);
+      ctx.moveTo(start.x, start.y);
+      ctx.lineTo(end.x, end.y);
+      ctx.stroke();
+    }else if (IsGameOver(board)) {
+        alert("Game Over, draw");
+    }
   }
 
   const updateBoard = () => {
@@ -174,4 +185,5 @@ function blockToCenterPosition(block: number): Position {
   x = x + 100
   return { x, y };
 }
+
 
