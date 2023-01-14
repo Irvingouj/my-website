@@ -72,7 +72,7 @@ const Game: FC<GameProps> = () => {
           className={styles.board}
           ref={canvasref}
         />
-        <img src ={src} alt ={"loading"}  />
+        {/* <img src ={src} alt ={"loading"}  /> */}
       </div>
     </div>
   );

@@ -1,22 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import TopNavBar from './components/TopNavBar';
-import Home from './components/Home';
-import About from './components/About';
-import Contact from './components/Contact';
-import Game from './components/Game/Game';
-import ChatBox from './components/ChatBox/ChatBox';
+import About from './components/about/about';
+import './styles.css'
+import './public.css'
+import GameWrapper from './components/gameWrapper/gameWrapper';
+import PhotoWall from './components/photoWall/photoWall';
+import LinksWrapper from './components/LinksWrapper/LinksWrapper';
+import Contacts from './components/contacts/contacts';
+import GameIntro from './components/gameIntro/gameIntro';
 
 function App() {
   return (
     <div className="App">
-      <TopNavBar/>
-      <Home/>
-      <About/>
-      <Game/>
-      <ChatBox/>
-      <Contact/>
+      <About />
+      <GameWrapper/>
+      <PhotoWall/>
+      <LinksWrapper/>
+      <GameIntro/>
+      <Contacts/>
     </div>
   );
 }
