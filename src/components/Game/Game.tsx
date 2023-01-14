@@ -1,9 +1,9 @@
 import { line } from "d3";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { DrawBoard, GameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
+import { ComputerPlay, DefaultGameBoard, DrawBoard, GameBoard, GameOver, IsGameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
 import styles from "./Game.module.css";
 
-interface GameProps {}
+interface GameProps { }
 
 type Position = {
   x: number;
@@ -11,13 +11,12 @@ type Position = {
 };
 
 const Game: FC<GameProps> = () => {
+  const [board, setBoard] = useState<GameBoard>(DefaultGameBoard);
   const [drawing, setDrawing] = useState(false);
   const [position, setPosition] = useState<Position | undefined>(undefined);
-  const [userCanDraw, setUserCanDraw] = useState<boolean>(true);
-  const [firstDrawMake, setFirstDrawMade] = useState<boolean>(false);
   const [userEndInputTimer, setUserEndInputTimer] = useState<NodeJS.Timeout>();
-  const [computerMove, setComputerMove] = useState<boolean>(false);
-  const [blockOfDrawing, setBlockOfDrawing] = useState<number>(-1);
+  const [userCurrentSquare, setUserCurrentSquare] = useState<number>(-1);
+  const [userPiece, setUserPiece] = useState<SquareValue>("X");
 
   const canvasref = useRef<HTMLCanvasElement>(null);
 
@@ -26,53 +25,11 @@ const Game: FC<GameProps> = () => {
     return canvasref.current?.getContext("2d")!;
   }
 
-  const paint = useCallback(
-    (e: MouseEvent) => {
-      if (!drawing) return;
-      if (OffBoard(position?.x!,position?.y!)) return;
-      if(notInBlockOfDrawing(blockOfDrawing,position?.x!,position?.y!)) return;
-      const ctx = getCanvas()
-      const posi = getOffSetPosition(e,canvasref);
-      ctx.beginPath();
-      ctx.moveTo(position!.x, position!.y);
-      ctx.lineTo(posi.x, posi.y);
-      ctx.stroke();
-      // console.debug(posi);
-      setPosition(posi);
-    },
-    [drawing, position]
-  );
+  function getComputerPiece(): SquareValue {
+    return userPiece === "X" ? "O" : "X";
+  }
 
-  // mouse up listener
-  useEffect(() => {
-      return mouseUp(canvasref, endDrawing);
-  }, []);
 
-  // mouse down listener
-  useEffect(() => {
-    return mouseDown(canvasref, startDrawing);
-  }, []);
-
-  // paint listener
-  useEffect(() => {
-    if(userCanDraw){
-      setFirstDrawMade(true);
-      return paintListener(canvasref, paint);
-    }
-  }, [paint]);
-
-  // user end input timer
-  useEffect(() => {
-    const userEndInputTimerStart = () => setTimeout(() => {
-      setUserCanDraw(false);
-      setComputerMove(true);
-    }, 2000);
-    clearTimeout(userEndInputTimer);
-    if(!drawing && firstDrawMake){
-      const timer = userEndInputTimerStart();
-      setUserEndInputTimer(timer);
-    }
-  },[drawing]);
 
   // draw board
   useEffect(() => {
@@ -82,39 +39,90 @@ const Game: FC<GameProps> = () => {
     }
   }, []);
 
-  // computer move
-  useEffect(() => {
-    if(computerMove){
-      const canvas = getCanvas();
-        // get user move square
-        // compute computer move square
-        // draw computer move
-        // check game over
-        // if game over, show game over
-        // else, set userCanDraw to true
-      
-    }
-  },[computerMove]);
+
+
 
 
   // start drawing handler
-  const startDrawing = (e: MouseEvent) => {
-    const posi = getOffSetPosition(e,canvasref);
+  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    const posi = getOffSetPosition(e, canvasref);
+    clearTimeout(userEndInputTimer!);
+    // console.debug(posi);
     setPosition(posi);
+    setUserCurrentSquare(positionToBlock(posi));
     setDrawing(true);
   };
 
   // end drawing handler
-  const endDrawing = (e:MouseEvent) => {
-    const posi = getOffSetPosition(e,canvasref);
+  const endDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    const posi = getOffSetPosition(e, canvasref);
     setPosition(posi);
     setDrawing(false);
+    updateBoard();
+    
+    // computer play
+    setUserEndInputTimer(setTimeout(() => {
+      if (IsGameOver(board)) {
+        gameOver();
+        return;
+      }
+      computerPlay();
+    }, 2000));
+    console.debug(board.squares);
+  }
+
+  const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    if (!drawing) return;
+    if (OffBoard(position?.x!, position?.y!)) return;
+    // if(notInBlockOfDrawing(blockOfDrawing,position?.x!,position?.y!)) return;
+    const ctx = getCanvas()
+    const posi = getOffSetPosition(e, canvasref);
+    ctx.beginPath();
+    ctx.moveTo(position!.x, position!.y);
+    ctx.lineTo(posi.x, posi.y);
+    ctx.stroke();
+    // console.debug(posi);
+    setPosition(posi);
   }
 
 
+  const drawComputerMove = (play: number) => {
+    const ctx = getCanvas();
+    const center = blockToCenterPosition(play);
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, 20, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
 
+  const gameOver = () => {
+    const ctx = getCanvas();
+    ctx.font = "30px Arial";
+    ctx.fillText("Game Over", 10, 50);
+  }
+
+  const updateBoard = () => {
+    board.squares[userCurrentSquare] = userPiece;
+    console.debug(board);
+    setBoard(board);
+  }
 
   
+
+  const computerPlay = () => {
+    let play = ComputerPlay(board, getComputerPiece());
+    // draw computer move
+    drawComputerMove(play);
+    // update board
+    board.squares[play] = getComputerPiece();
+    setBoard(board);
+    // check game over
+    if (IsGameOver(board)) {
+      // show game over
+      gameOver();
+    }
+  }
+
+
   return (
     <div className="Game">
       <div className="BoardWrapper">
@@ -124,6 +132,14 @@ const Game: FC<GameProps> = () => {
           style={{ width: "500px", height: "300px" }}
           className={styles.board}
           ref={canvasref}
+          onMouseDown={(e) => { startDrawing(e) }}
+          onMouseUp={(e) => { endDrawing(e) }}
+          onMouseMove={(e) => {
+            if (drawing) {
+              draw(e)
+            }
+          }}
+
         />
       </div>
     </div>
@@ -131,64 +147,31 @@ const Game: FC<GameProps> = () => {
 };
 export default Game;
 
-function mouseUp(
-  canvasref: React.RefObject<HTMLCanvasElement>,
-  endDrawing: (e:MouseEvent) => void
-) {
-  const ctx = canvasref.current?.getContext("2d");
-  if (!ctx) throw new Error("No canvas context");
-  canvasref.current?.addEventListener("mouseup", (e) => {
-    endDrawing(e);
-  });
 
-  // console.debug("mouse up");
-  
-  return () => {
-    canvasref.current?.removeEventListener("mouseup", (e) => {
-      endDrawing(e);
-    });
-  };
-}
-
-function mouseDown(
-  canvasref: React.RefObject<HTMLCanvasElement>,
-  startDrawing: (e: MouseEvent) => void
-) {
-  const ctx = canvasref.current?.getContext("2d");
-  if (!ctx) throw new Error("No canvas context");
-  canvasref.current?.addEventListener("mousedown", startDrawing);
-  return () => {
-    canvasref.current?.removeEventListener("mousedown", startDrawing);
-  };
-}
-
-function paintListener(
-  canvasref: React.RefObject<HTMLCanvasElement>,
-  paint: (e: MouseEvent) => void
-) {
-  if (!canvasref.current) {
-    return;
-  }
-  const canvas: HTMLCanvasElement = canvasref.current;
-  canvas.addEventListener("mousemove", paint);
-  return () => {
-    canvas.removeEventListener("mousemove", paint);
-  };
-}
-
-function getOffSetPosition(e: MouseEvent,canvasref: React.RefObject<HTMLCanvasElement>): Position{
+function getOffSetPosition(e: React.MouseEvent<HTMLCanvasElement, MouseEvent>, canvasref: React.RefObject<HTMLCanvasElement>): Position {
   const rect = canvasref.current?.getBoundingClientRect();
   const x = e.clientX - rect!.x;
   const y = e.clientY - rect!.y;
   return { x, y };
 };
 
-function notInBlockOfDrawing(block:number,x:number,y:number):boolean{
-  return false;
+function positionToBlock(position: Position | undefined): number {
+  if (!position) return -1;
+  if (OffBoard(position.x, position.y)) {
+    return -1
+  };
+  // const offSetPostion = getOffSetPosition(position);
+  let xBlock = Math.floor(position.x / 100);
+  let yBlock = Math.floor(position.y / 100);
+  var block = xBlock + yBlock * 3;
+  return block - 1;
 }
 
-function positionToBlock(x:number,y:number):number{
-    let xBlock = Math.floor(x/100);
-    let yBlock = Math.floor(y/100);
-    return -1;
+function blockToCenterPosition(block: number): Position {
+  console.debug(block);
+  let x = (block % 3) * 100 + 50;
+  let y = Math.floor(block / 3) * 100 + 50;
+  x = x + 100
+  return { x, y };
 }
+
