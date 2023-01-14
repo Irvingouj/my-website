@@ -1,28 +1,11 @@
 import React, { FC } from 'react';
+import TopBar from '../topBar/topBar';
 
 interface AboutProps {}
 
 const About: FC<AboutProps> = () => (
   <div className="banner">
-	<div className="w indtop">
-		<div className="fl logo"><img src="logo.png" /></div>
-		<div className="pc_fr tel"><img src="01.png" />+132 459 05 6540</div>
-		<div className="fr menu">
-			<a href="#" className="nav__trigger"><span className="nav__icon"></span></a>
-			<nav className="nav">
-				<div className="nav__list">
-					<ul className="cd-accordion-menu animated">
-						<li className="on"><a href="#">Home</a></li>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Photo</a></li>
-						<li><a href="#">Game</a></li>
-						<li><a href="#">Contact</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		<div className="clear"></div>
-	</div>
+	<TopBar/>
 	<div className="w ban_con">
 		<div className="pc_fl txt">
 			<h3>Name<span>******</span></h3>

@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px) {
+    .width{
+        width: 95%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+.intro_top{
+    float:left; margin-left:.1rem; line-height:.24rem; font-size:.12rem;
+}
