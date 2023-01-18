@@ -1,4 +1,3 @@
-import { line } from "d3";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { ComputerPlay, DefaultGameBoard, DrawBoard, GameBoard, GameOver, IsGameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
 import styles from "./Game.module.css";
@@ -10,6 +9,8 @@ type Position = {
   y: number;
 };
 
+var degree:number = -Math.PI;
+
 const Game: FC<GameProps> = () => {
   const [board, setBoard] = useState<GameBoard>(DefaultGameBoard);
   const [drawing, setDrawing] = useState(false);
@@ -17,6 +18,7 @@ const Game: FC<GameProps> = () => {
   const [userEndInputTimer, setUserEndInputTimer] = useState<NodeJS.Timeout>();
   const [userCurrentSquare, setUserCurrentSquare] = useState<number>(-1);
   const [userPiece, setUserPiece] = useState<SquareValue>("X");
+  const [useStrokeNumer, setUseStrokeNumer] = useState<number>(0);
 
   const canvasref = useRef<HTMLCanvasElement>(null);
 
@@ -68,7 +70,6 @@ const Game: FC<GameProps> = () => {
       }
       computerPlay();
     }, 2000));
-    console.debug(board.squares);
   }
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -87,12 +88,41 @@ const Game: FC<GameProps> = () => {
 
 
   const drawComputerMove = (play: number) => {
+    
     const ctx = getCanvas();
     const center = blockToCenterPosition(play);
-    ctx.beginPath();
-    ctx.arc(center.x, center.y, 20, 0, 2 * Math.PI);
-    ctx.stroke();
+
+  // draw circle with animation
+    // ctx.beginPath();
+    // ctx.arc(center.x, center.y, 40, 0, 2 * Math.PI);
+    // ctx.stroke();
+    drawCircle(center);
   }
+
+  const drawCircle = (center: Position) => {
+    window.requestAnimationFrame(() => {
+      drawCircle(center);
+    });
+    if(degree > Math.PI) {
+      degree = -Math.PI;
+      return;
+    };
+    let d = 0.1;
+    const ctx = getCanvas();
+    let x = 40*Math.cos(degree) + center.x;
+    let y = 40*Math.sin(degree) + center.y;
+
+    let x1 = 40*Math.cos(degree+d) + center.x;
+    let y1 = 40*Math.sin(degree+d) + center.y;
+    console.debug(x,y,x1,y1);
+
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(x1,y1);
+    ctx.stroke();
+    degree += d;
+  }
+
 
   const gameOver = () => {
     const ctx = getCanvas();
