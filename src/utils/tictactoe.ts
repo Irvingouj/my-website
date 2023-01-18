@@ -84,13 +84,40 @@ export const OffBoard = (x: number, y: number): boolean => {
 export const ComputerPlay = (board:GameBoard,computerPiece:SquareValue): number => {
   const computer = computerPiece;
   const human = computer === 'X' ? 'O' : 'X';
-  const emptySquares = board.squares.map((square,index) => square === null ? index : null).filter(index => index !== null);
-  return emptySquares[Math.floor(Math.random() * emptySquares.length)] as number;
-}
+  const emptySquares = board.squares.map((square,index) => square===null? index:null).filter(index => index !== null);
 
-function minimax(board: GameBoard, computer: string, human: string, emptySquares: (number | null)[]) {
+  // if center is empty, take it
+  if (board.squares[4] === null) return 4;
 
-  return 1;
+  // if computer have two in a row, take it
+  for (let i = 0; i < emptySquares.length; i++) {
+    const move = emptySquares[i]!;
+    const copy = board.squares.slice();
+    copy[move] = computer;
+    if (PlayerWins(copy, computer!)) {
+      return move;
+    }
+  }
+  // if user have two in a row, block them
+  for (let i = 0; i < emptySquares.length; i++) {
+    const move = emptySquares[i]!;
+    const copy = board.squares.slice();
+    copy[move] = human;
+    if (PlayerWins(copy, human)) {
+      return move;
+    }
+  }
+
+
+  // if sides are empty, take one
+  const sides = [1, 3, 5, 7];
+  for (let i = 0; i < sides.length; i++) {
+    if (board.squares[sides[i]] === null) return sides[i];
+  }
+
+  // return some random move
+  return emptySquares[Math.floor(Math.random() * emptySquares.length)]!;
+
 }
 
 export const IsGameOver = (board: GameBoard): boolean => {
