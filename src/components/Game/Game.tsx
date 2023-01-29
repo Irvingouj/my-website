@@ -5,7 +5,7 @@ import styles from "./Game.module.css";
 
 interface GameProps { }
 
-type Position = {
+export type Position = {
   x: number;
   y: number;
 };
@@ -15,13 +15,12 @@ var degree:number = -Math.PI;
 const Game: FC<GameProps> = () => {
   const [board, setBoard] = useState<GameBoard>(DefaultGameBoard);
   const [drawing, setDrawing] = useState(false);
-  const [position, setPosition] = useState<Position | undefined>(undefined);
-  const [userEndInputTimer, setUserEndInputTimer] = useState<NodeJS.Timeout>();
   const [userCurrentSquare, setUserCurrentSquare] = useState<number>(-1);
-  const [userPiece, setUserPiece] = useState<SquareValue>("X");
-  const [useStrokeNumer, setUseStrokeNumer] = useState<number>(0);
 
   const canvasref = useRef<HTMLCanvasElement>(null);
+  const userEndInputTimer = useRef<NodeJS.Timeout>();
+  const position = useRef<Position | undefined>(undefined);
+  const userPiece = useRef<SquareValue>("X");
 
   function getCanvas(): CanvasRenderingContext2D {
     if (!canvasref.current) throw new Error("No canvas");
@@ -29,7 +28,7 @@ const Game: FC<GameProps> = () => {
   }
 
   function getComputerPiece(): SquareValue {
-    return userPiece === "X" ? "O" : "X";
+    return userPiece.current === "X" ? "O" : "X";
   }
 
 
@@ -49,9 +48,8 @@ const Game: FC<GameProps> = () => {
   // start drawing handler
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const posi = getOffSetPosition(e, canvasref);
-    clearTimeout(userEndInputTimer!);
-    // console.debug(posi);
-    setPosition(posi);
+    clearTimeout(userEndInputTimer.current!);
+    position.current = posi;
     setUserCurrentSquare(positionToBlock(posi));
     setDrawing(true);
   };
@@ -59,32 +57,32 @@ const Game: FC<GameProps> = () => {
   // end drawing handler
   const endDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const posi = getOffSetPosition(e, canvasref);
-    setPosition(posi);
+    position.current = posi;
     setDrawing(false);
     updateBoard();
     
     // computer play
-    setUserEndInputTimer(setTimeout(() => {
+    userEndInputTimer.current = setTimeout(() => {
       if (IsGameOver(board)) {
         gameOver();
         return;
       }
       computerPlay();
-    }, 2000));
+    }, 2000);
   }
 
   const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     if (!drawing) return;
-    if (OffBoard(position?.x!, position?.y!)) return;
-    // if(notInBlockOfDrawing(blockOfDrawing,position?.x!,position?.y!)) return;
+    if (OffBoard(position.current!.x!, position.current!.y!)) return;
+    // if(notInBlockOfDrawing(blockOfDrawing,position.current!.x!,position.current!.y!)) return;
     const ctx = getCanvas()
     const posi = getOffSetPosition(e, canvasref);
     ctx.beginPath();
-    ctx.moveTo(position!.x, position!.y);
+    ctx.moveTo(position.current!.x, position.current!.y);
     ctx.lineTo(posi.x, posi.y);
     ctx.stroke();
     // console.debug(posi);
-    setPosition(posi);
+    position.current = posi;
   }
 
 
@@ -141,12 +139,10 @@ const Game: FC<GameProps> = () => {
   }
 
   const updateBoard = () => {
-    board.squares[userCurrentSquare] = userPiece;
+    board.squares[userCurrentSquare] = userPiece.current;
     console.debug(board);
     setBoard(board);
   }
-
-  
 
   const computerPlay = () => {
     let play = ComputerPlay(board, getComputerPiece());

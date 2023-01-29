@@ -1,6 +1,16 @@
 {
     "cSpell.words": [
+        "canvasref",
         "Postpage"
     ],
     "svg.preview.background": "custom",
+    "editor.renderLineHighlight": "all",
+    "workbench.colorCustomizations": {
+        "[Default Dark+]": {
+            "editor.lineHighlightBackground": "#00000071",
+        },
+        "[Default Light+]": {
+            "editor.lineHighlightBackground": "#0000003f",
+        }
+    },
 }

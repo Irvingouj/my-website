@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CanvasDrawer from "./components/CanvasDrawer/CanvasDrawer";
 const DrawGraph = React.lazy(() => import("./pages/DrawGraph/DrawGraph"));
 
 ReactDOM.render(
@@ -16,6 +17,7 @@ ReactDOM.render(
             <DrawGraph />
           </React.Suspense>
         } />
+        <Route path="/CanvasDrawer" element={<CanvasDrawer/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
