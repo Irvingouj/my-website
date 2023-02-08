@@ -21,6 +21,7 @@ const Game: FC<GameProps> = () => {
   const userEndInputTimer = useRef<NodeJS.Timeout>();
   const position = useRef<Position | undefined>(undefined);
   const userPiece = useRef<SquareValue>("X");
+  const animationId = useRef<number>(0);
 
   function getCanvas(): CanvasRenderingContext2D {
     if (!canvasref.current) throw new Error("No canvas");
@@ -95,15 +96,19 @@ const Game: FC<GameProps> = () => {
     // ctx.beginPath();
     // ctx.arc(center.x, center.y, 40, 0, 2 * Math.PI);
     // ctx.stroke();
-    drawCircle(center);
+    // drawCircle(center);
+    animationId.current= window.requestAnimationFrame(() => {
+      drawCross(center);
+    });
   }
 
   const drawCircle = (center: Position) => {
-    window.requestAnimationFrame(() => {
+    animationId.current = window.requestAnimationFrame(() => {
       drawCircle(center);
     });
     if(degree > Math.PI) {
       degree = -Math.PI;
+      window.cancelAnimationFrame(animationId.current);
       return;
     };
     let d = 0.1;
@@ -114,6 +119,47 @@ const Game: FC<GameProps> = () => {
     let x1 = 40*Math.cos(degree+d) + center.x;
     let y1 = 40*Math.sin(degree+d) + center.y;
     console.debug(x,y,x1,y1);
+
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(x1,y1);
+    ctx.stroke();
+    degree += d;
+  }
+
+  const drawCross = (center: Position) => {
+    animationId.current = window.requestAnimationFrame(() => {
+      drawCross(center);
+    });
+    if(degree > Math.PI) {
+      degree = -Math.PI;
+      window.cancelAnimationFrame(animationId.current);
+      return;
+    };
+    let d = 0.05;
+    const ctx = getCanvas();
+    let x = 0,y = 0,x1=0,y1=0;
+
+
+    if(degree < 0) {
+      let c = Math.abs(degree/Math.PI);
+      let cd = Math.abs((degree+d)/Math.PI); 
+       x = -(40*c - 20)+center.x;
+       y = -(40*c - 20)+center.y;
+       x1 = -(40*cd - 20)+center.x;
+       y1 = -(40*cd - 20)+center.y;
+    }else{
+      let c = Math.abs(degree/Math.PI);
+      let cd = Math.abs((degree+d)/Math.PI); 
+      x = (40*c - 20)+center.x;
+      y = -(40*c - 20)+center.y;
+      x1 = (40*cd - 20)+center.x;
+      y1 = -(40*cd - 20)+center.y;
+    }
+
+    console.debug(Math.abs(x-x1),Math.abs(y-y1), degree);
+    
+    
 
     ctx.beginPath();
     ctx.moveTo(x,y);
