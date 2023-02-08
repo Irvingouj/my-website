@@ -7,6 +7,7 @@ import PhotoWall from './components/photoWall/photoWall';
 import LinksWrapper from './components/LinksWrapper/LinksWrapper';
 import Contacts from './components/contacts/contacts';
 import GameIntro from './components/gameIntro/gameIntro';
+import Chatbox from './components/chatbox/chatbox';
 
 function App() {
   return (
@@ -14,8 +15,10 @@ function App() {
       <About />
       <GameWrapper/>
       {/* <PhotoWall/> */}
+      <Chatbox/>
       <LinksWrapper/>
-      <GameIntro/>
+      
+      {/* <GameIntro/> */}
       <Contacts/>
     </div>
   );

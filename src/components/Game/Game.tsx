@@ -43,9 +43,6 @@ const Game: FC<GameProps> = () => {
   }, []);
 
 
-
-
-
   // start drawing handler
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const posi = getOffSetPosition(e, canvasref);
@@ -92,11 +89,6 @@ const Game: FC<GameProps> = () => {
     const ctx = getCanvas();
     const center = blockToCenterPosition(play);
 
-  // draw circle with animation
-    // ctx.beginPath();
-    // ctx.arc(center.x, center.y, 40, 0, 2 * Math.PI);
-    // ctx.stroke();
-    // drawCircle(center);
     animationId.current= window.requestAnimationFrame(() => {
       drawCross(center);
     });
@@ -118,7 +110,6 @@ const Game: FC<GameProps> = () => {
 
     let x1 = 40*Math.cos(degree+d) + center.x;
     let y1 = 40*Math.sin(degree+d) + center.y;
-    console.debug(x,y,x1,y1);
 
     ctx.beginPath();
     ctx.moveTo(x,y);
@@ -156,10 +147,6 @@ const Game: FC<GameProps> = () => {
       x1 = (40*cd - 20)+center.x;
       y1 = -(40*cd - 20)+center.y;
     }
-
-    console.debug(Math.abs(x-x1),Math.abs(y-y1), degree);
-    
-    
 
     ctx.beginPath();
     ctx.moveTo(x,y);
