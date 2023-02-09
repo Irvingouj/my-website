@@ -28,7 +28,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "gen": "npx generate-react-cli component",
-    "tsc": "tsc ./public/graph/*.ts "
+    "tsc": "tsc ./public/graph/*.ts ",
+    "deploy:firebase": "react-scripts build && firebase deploy"
   },
   "eslintConfig": {
     "extends": [

@@ -161,8 +161,7 @@ const Game: FC<GameProps> = () => {
     var winningLine = GetWinnerLine(board);
     if (winningLine[0]!==-1 && winningLine[1]!==-1) {
       ctx.beginPath();
-      const start = blockToCenterPosition(winningLine[0]);
-      const end = blockToCenterPosition(winningLine[1]);
+      const [start,end] = winningLineEndPosition(winningLine[0]!, winningLine[1]!);
       ctx.moveTo(start.x, start.y);
       ctx.lineTo(end.x, end.y);
       ctx.stroke();
@@ -244,4 +243,35 @@ function blockToCenterPosition(block: number): Position {
   return { x, y };
 }
 
+function winningLineEndPosition(block1: number, block2: number): [Position,Position] {
+  let block_1_center = blockToCenterPosition(block1);
+  let block_2_center = blockToCenterPosition(block2);
+  console.info(block_1_center, block_2_center);
+
+  // if the blocks are vertical 
+  if (block_1_center.x == block_2_center.x) {
+    block_1_center = { x: block_1_center.x - 50, y: block_1_center.y };
+    block_2_center = { x: block_2_center.x + 50, y: block_2_center.y };
+    return [block_1_center, block_2_center];
+  }
+
+  // if the blocks are horizontal
+  if (block_1_center.y == block_2_center.y) {
+    block_1_center = { x: block_1_center.x, y: block_1_center.y - 50 };
+    block_2_center = { x: block_2_center.x, y: block_2_center.y + 50 };
+    return [block_1_center, block_2_center];
+  }
+
+  // if the blocks are diagonal
+  if (block_1_center.x < block_2_center.x) {
+    block_1_center = { x: block_1_center.x - 50, y: block_1_center.y - 50 };
+    block_2_center = { x: block_2_center.x + 50, y: block_2_center.y + 50 };
+    return [block_1_center, block_2_center];
+  } else {
+    block_1_center = { x: block_1_center.x + 50, y: block_1_center.y - 50 };
+    block_2_center = { x: block_2_center.x - 50, y: block_2_center.y + 50 };
+    return [block_1_center, block_2_center];
+  }
+  
+}
 
