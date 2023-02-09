@@ -1,12 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
+import { getResponse, Message } from '../../utils/ChatService';
 import './chatbox.css';
 
 interface ChatboxProps { }
 
-interface Message {
-  content: string;
-  sender: string;
-}
+
 
 const Chatbox: FC<ChatboxProps> = () => {
   const [messages, setMessages] = useState<Message[]>([{content: "Hello,is there anything you wanna know about me?", sender: "me"}]);
@@ -26,16 +24,26 @@ const Chatbox: FC<ChatboxProps> = () => {
   }
 
   useEffect(() => {
+
+    async function getResponseFromServer(message: string) {
+      console.log("message:"+message);
+      const res = await getResponse(messages);
+      res.split(':');
+      
+      setMessages([...messages, {content:res,sender:"Me"}]);
+      setInputFinished(false);
+    }
+
     if (!inputFinished) {
       return
     }
-    
-    const newMessage = {
-      content: "I'm sorry, I don't know what you mean.",
-      sender: "me"
+
+    try{
+
+      getResponseFromServer(messages.at(messages.length - 1)?.content!)
+    }catch(e){
+      setMessages([...messages, {content: "Sorry,OpenAI refuse to answer",sender:"Me"}]);
     }
-    setMessages([...messages, newMessage]);
-    setInputFinished(false);
     
   }, [inputFinished])
  
