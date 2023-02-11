@@ -26,9 +26,11 @@ const LinksWrapper: FC<LinksWrapperProps> = () => {
 								This personal portfolio website is designed to showcase my skills and experiences, built using the latest technologies such as React
 								and Typescript. And, in keeping with my passion for technology, the site features a chatbox powered by OpenAI, allowing visitors to
 								ask me anything and get to know me better. However, if you're looking for my secret OpenAI key, I'm afraid you're out of luck - it's
-								safely stored in my backend service using Azure Functions, guarded more closely than the Crown Jewels. And, for those who value their privacy,
-								just know that any information shared in the chatbox will be kept confidential. So go ahead, ask away!
-							</p><a href="11.png" download={"Irving's Resume"}>READ MORE</a>
+								safely stored in my backend service using Azure Functions. And, for those who value their privacy,
+								just know that any information shared in the chatbox will be kept confidential (Beware Open AI has access to it). So go ahead, ask away!
+							</p>
+			
+							<a href="11.png">Website Repo</a>
 						</div>
 					</li>
 				</ul>
