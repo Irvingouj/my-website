@@ -2,21 +2,33 @@ import React, { FC } from 'react';
 import { GetText } from '../../utils/TextSource';
 import TopBar from '../topBar/topBar';
 
-interface AboutProps {}
+interface AboutProps { }
 
 const About: FC<AboutProps> = () => (
-  <div className="banner">
-	<TopBar/>
-	<div className="w ban_con">
-		<div className="pc_fl txt">
-			<h3>Name<span>{GetText.name()}</span></h3>
-			<h3>Brief introduction</h3>
-			<p>Tic-Tac-Toe, or Tic-tac-toe, is a game of beads played on a 3-by-3 grid. Similar to gobang, it gets its name from the fact that the board has no borders and the lines are arranged in tic-tac-toe. The only tools required for the game are pen and paper, and then the two players representing O and X take turns to leave marks on the grid (generally speaking, the first player is X). If any three marks form a straight line, the winner will win.</p>
+	<div className="banner">
+		<TopBar />
+		<div className="w ban_con">
+			<div className="pc_fl txt">
+				<h1 style={{ fontStyle: 'italic' }} >Hi There, My name is {GetText.name()}</h1>
+				<br />
+				<br />
+				<p style={{ fontSize: '20px', fontStyle: 'oblique', color: 'black' }}>
+				Hi there! So excited to see you! I recently graduated from Carleton University with a double major in Math and Computer Science 
+				and I'm eager to bring my skills and experience to the next step of my career. I pride myself on being a problem solver with a 
+				strong work ethic, and I've received recognition for these qualities from my previous managers and supervisors. I also understand 
+				the importance of clear and effective communication and I always strive to deliver on my promises. I am confident in my abilities 
+				and I am excited to see what the future holds for me in the technology industry.
+				</p>
+				<br />
+				<p>
+					play a game with me!  <br />
+					draw circle please! I am working on text recognition of what you drawing, but it is not ready yet. <br />
+				</p>
+			</div>
+			<div className="pc_fr img"><img src="selfie.png" /></div>
+			<div className="clear"></div>
 		</div>
-		<div className="pc_fr img"><img src="selfie.png" /></div>
-		<div className="clear"></div>
 	</div>
-</div>
 );
 
 export default About;

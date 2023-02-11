@@ -1,5 +1,4 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import { Canvas } from "../../utils/canvas";
 import { ComputerPlay, DefaultGameBoard, DrawBoard, GameBoard, GameOver, GetWinnerLine, IsGameOver, OffBoard, SquareValue } from "../../utils/tictactoe";
 import styles from "./Game.module.css";
 
@@ -23,6 +22,14 @@ const Game: FC<GameProps> = () => {
   const userPiece = useRef<SquareValue>("X");
   const animationId = useRef<number>(0);
 
+  // draw board
+  useEffect(() => {
+    const ctx = canvasref.current?.getContext("2d");
+    if (ctx) {
+      DrawBoard(ctx);
+    }
+  }, []);
+  
   function getCanvas(): CanvasRenderingContext2D {
     if (!canvasref.current) throw new Error("No canvas");
     return canvasref.current?.getContext("2d")!;
@@ -31,17 +38,6 @@ const Game: FC<GameProps> = () => {
   function getComputerPiece(): SquareValue {
     return userPiece.current === "X" ? "O" : "X";
   }
-
-
-
-  // draw board
-  useEffect(() => {
-    const ctx = canvasref.current?.getContext("2d");
-    if (ctx) {
-      DrawBoard(ctx);
-    }
-  }, []);
-
 
   // start drawing handler
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -155,16 +151,45 @@ const Game: FC<GameProps> = () => {
     degree += d;
   }
 
+  const drawPath= (start: Position, end: Position) => {
+    animationId.current = window.requestAnimationFrame(() => {
+      drawPath(start,end);
+    });
+    if(degree > Math.PI) {
+      degree = -Math.PI;
+      window.cancelAnimationFrame(animationId.current);
+      return;
+    };
+
+    let d = 0.05;
+    let progress = (degree + Math.PI)/(2*Math.PI); // progress from 0 to 1
+    let progress_d = (degree + Math.PI + d)/(2*Math.PI); // progress of next step from 0 to 1
+
+    let x = start.x + (end.x - start.x)*progress;
+    let y = start.y + (end.y - start.y)*progress;
+
+    let x1 = start.x + (end.x - start.x)*progress_d;
+    let y1 = start.y + (end.y - start.y)*progress_d;
+
+    const ctx = getCanvas();
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(x1,y1);
+    ctx.stroke();
+
+    degree += d;
+  }
+
 
   const gameOver = () => {
-    const ctx = getCanvas();
     var winningLine = GetWinnerLine(board);
     if (winningLine[0]!==-1 && winningLine[1]!==-1) {
-      ctx.beginPath();
       const [start,end] = winningLineEndPosition(winningLine[0]!, winningLine[1]!);
-      ctx.moveTo(start.x, start.y);
-      ctx.lineTo(end.x, end.y);
-      ctx.stroke();
+      animationId.current = window.requestAnimationFrame(() => {
+        drawPath(start,end);
+      });
+
     }else if (IsGameOver(board)) {
         alert("Game Over, draw");
     }
@@ -248,28 +273,30 @@ function winningLineEndPosition(block1: number, block2: number): [Position,Posit
   let block_2_center = blockToCenterPosition(block2);
   console.info(block_1_center, block_2_center);
 
+  let offset = 40;
   // if the blocks are vertical 
-  if (block_1_center.x == block_2_center.x) {
-    block_1_center = { x: block_1_center.x - 50, y: block_1_center.y };
-    block_2_center = { x: block_2_center.x + 50, y: block_2_center.y };
+  if (block_1_center.x === block_2_center.x) {
+    block_1_center = { x: block_1_center.x , y: block_1_center.y - offset };
+    block_2_center = { x: block_2_center.x , y: block_2_center.y + offset };
     return [block_1_center, block_2_center];
   }
 
   // if the blocks are horizontal
-  if (block_1_center.y == block_2_center.y) {
-    block_1_center = { x: block_1_center.x, y: block_1_center.y - 50 };
-    block_2_center = { x: block_2_center.x, y: block_2_center.y + 50 };
+  if (block_1_center.y === block_2_center.y) {
+    block_1_center = { x: block_1_center.x + offset, y: block_1_center.y };
+    block_2_center = { x: block_2_center.x + offset, y: block_2_center.y  };
     return [block_1_center, block_2_center];
   }
 
   // if the blocks are diagonal
+  let increment = Math.cos(Math.PI / 4) * offset;
   if (block_1_center.x < block_2_center.x) {
-    block_1_center = { x: block_1_center.x - 50, y: block_1_center.y - 50 };
-    block_2_center = { x: block_2_center.x + 50, y: block_2_center.y + 50 };
+    block_1_center = { x: block_1_center.x - increment, y: block_1_center.y - increment };
+    block_2_center = { x: block_2_center.x + increment, y: block_2_center.y + increment };
     return [block_1_center, block_2_center];
   } else {
-    block_1_center = { x: block_1_center.x + 50, y: block_1_center.y - 50 };
-    block_2_center = { x: block_2_center.x - 50, y: block_2_center.y + 50 };
+    block_1_center = { x: block_1_center.x + increment, y: block_1_center.y - increment };
+    block_2_center = { x: block_2_center.x - increment, y: block_2_center.y + increment };
     return [block_1_center, block_2_center];
   }
   
