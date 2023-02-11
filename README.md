@@ -1,3 +1,11 @@
+# Welcome to my website github repo
+
+This website is deployed, [Link is here](https://irvingouj.com/).
+
+Please let me know if you find bugs or feels off somewhere. 
+
+And I know it is still not perfect, I kind of rushed it like a start up employee. I will refractor it in the future. Anyway, I'm glad you are here.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

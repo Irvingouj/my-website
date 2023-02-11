@@ -30,7 +30,7 @@ const LinksWrapper: FC<LinksWrapperProps> = () => {
 								just know that any information shared in the chatbox will be kept confidential (Beware Open AI has access to it). So go ahead, ask away!
 							</p>
 			
-							<a href="11.png">Website Repo</a>
+							<a href="https://github.com/Irvingouj/my-website">Website Repo</a>
 						</div>
 					</li>
 				</ul>
