@@ -10,17 +10,17 @@ const LinksWrapper: FC<LinksWrapperProps> = () => {
 			<div className="w ww zuopin">
 				<ul>
 					<li className='block'>
-						<div className="img"><a href="#"><img src="resume-icon.jpg" /><h3>Resume</h3></a></div>
+						<div className="img"><a href="Software_Engineer_Resume__8.pdf" target="_blank" rel="noopener noreferrer"><img src="resume-icon.jpg" /><h3>Resume</h3></a></div>
 						<div className="txt">
 							<p>
 								You looking for a software engineer with a passion for technology? Look no further! I guarantee you that I am the best candidate for the job.
 								Hit the download button below to view my resume!.
 							</p>
-							<a href="Software_Engineer_Resume__8.pdf" download={"Irving's Resume"}>Download</a>
+							<a href="Software_Engineer_Resume__8.pdf" target="_blank" rel="noopener noreferrer">Download</a>
 						</div>
 					</li>
 					<li className='block'>
-						<div className="img"><a href="#"><img src="openai-react-logo.png" /><h3>Fun fact about this website</h3></a></div>
+						<div className="img"><a href="https://github.com/Irvingouj/my-website"><img src="openai-react-logo.png" /><h3>Fun fact about this website</h3></a></div>
 						<div className="txt">
 							<p>
 								This personal portfolio website is designed to showcase my skills and experiences, built using the latest technologies such as React
