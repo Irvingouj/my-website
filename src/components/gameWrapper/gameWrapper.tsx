@@ -5,7 +5,7 @@ import "./gameWrapper.css"
 interface GameWrapperProps {}
 
 const GameWrapper: FC<GameWrapperProps> = () => (
-  <div className="jl_img">
+  <div className="jl_img" id="Game">
     <Game />
   </div>
 );

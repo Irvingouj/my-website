@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { GetText } from '../../utils/TextSource';
+import { smoothScroll } from '../topBar/topBar';
 import styles from './contacts.module.css';
 
 interface ContactsProps { }
 
 const Contacts: FC<ContactsProps> = () => (
-	<div className="w footer">
+	<div className="w footer" id="Contact">
 		<div className="fot_1">
 			<p><img src="15.png" />{GetText.email()}</p>
 			<div>
@@ -27,7 +28,11 @@ const Contacts: FC<ContactsProps> = () => (
 		</div>
 		<div className="fot_3">
 			<p>Quick navigation</p>
-			<div><a href="#">About</a><a href="#">Photo</a><a href="#">Game</a><a href="#">Contact</a></div>
+			<div>
+				<a href="#" onClick={smoothScroll}>About</a>
+				<a href="#Game" onClick={smoothScroll}>Game</a>
+				<a href="#Chat" onClick={smoothScroll}>Chat</a>
+				</div>
 		</div>
 	</div>
 );

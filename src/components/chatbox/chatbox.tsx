@@ -65,7 +65,7 @@ const Chatbox: FC<ChatboxProps> = () => {
 
 
   return (
-    <div className="zuopin2">
+    <div className="zuopin2" id="Chat">
       <div className="w ww">
         <div className="chatarea">
           <div className="chatbox" ref={chatboxRef}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import About from './components/about/about';
 import './styles.css'
 import './public.css'
@@ -8,18 +8,20 @@ import LinksWrapper from './components/LinksWrapper/LinksWrapper';
 import Contacts from './components/contacts/contacts';
 import GameIntro from './components/gameIntro/gameIntro';
 import Chatbox from './components/chatbox/chatbox';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{scrollBehavior:"smooth"}}>
       <About />
       <GameWrapper/>
       {/* <PhotoWall/> */}
-      <Chatbox/>
-      <LinksWrapper/>
-      
+      <Chatbox />
+      <LinksWrapper />
+
       {/* <GameIntro/> */}
-      <Contacts/>
+      <Contacts />
+      
     </div>
   );
 }

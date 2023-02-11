@@ -5,6 +5,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CanvasDrawer from "./components/CanvasDrawer/CanvasDrawer";
+import About from "./components/about/about";
+import GameWrapper from "./components/gameWrapper/gameWrapper";
+import Chatbox from "./components/chatbox/chatbox";
+import Contacts from "./components/contacts/contacts";
+import LinksWrapper from "./components/LinksWrapper/LinksWrapper";
 const DrawGraph = React.lazy(() => import("./pages/DrawGraph/DrawGraph"));
 
 ReactDOM.render(
@@ -18,8 +23,16 @@ ReactDOM.render(
           </React.Suspense>
         } />
         <Route path="/CanvasDrawer" element={<CanvasDrawer/>}/>
+
+        <Route path="About" element={<About />} />
+        <Route path="Game" element={<GameWrapper />} />
+        <Route path="Chat" element={<Chatbox />} />
+        <Route path="Links" element={<LinksWrapper />} />
+        <Route path="Contact" element={<Contacts />} />
+       
       </Routes>
     </BrowserRouter>
+    
   </React.StrictMode>,
   document.getElementById("root")
 );

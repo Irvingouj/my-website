@@ -9,3 +9,7 @@
 .intro_top{
     float:left; margin-left:.1rem; line-height:.24rem; font-size:.12rem;
 }
+
+.menu li a:hover{
+    color:#FFFFFF; background:#87cefa;
+}
