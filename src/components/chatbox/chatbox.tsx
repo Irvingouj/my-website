@@ -11,7 +11,6 @@ const Chatbox: FC<ChatboxProps> = () => {
   const [inputFinished, setInputFinished] = useState<boolean>(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const chatboxRef = React.useRef<HTMLDivElement>(null);
-  const [waiting, setWaiting] = useState<boolean>(false);
 
 
   const sendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -30,9 +29,8 @@ const Chatbox: FC<ChatboxProps> = () => {
 
     async function getResponseFromServer(message: string) {
       console.log("message:" + message);
-      setWaiting(true)
       const res = await getResponse(messages);
-      setWaiting(false)
+
       setMessages([...messages, { content: res, sender: "Me" }]);
       setInputFinished(false);
     }
@@ -58,14 +56,11 @@ const Chatbox: FC<ChatboxProps> = () => {
     console.log("messages:" + messages)
   }, [messages])
 
-
-
-  const getWaiting = () => {
-    if (waiting) {
-      return (
-        <ListElement message={{sender:'me',content:""}} index={messages.length} waiting={true}/>
-      )
+  const minHeight = (message:string) => {
+    if(message.length < 17){
+      return 60;
     }
+    return Math.ceil(message.length/17) * 6
   }
 
 
@@ -76,11 +71,18 @@ const Chatbox: FC<ChatboxProps> = () => {
           <div className="chatbox" ref={chatboxRef}>
             {
               messages.map((message, index) => {
-                return <ListElement message={message} index={index} key={index}/>
+                return (
+                  <div className={"chat-list-item " + (index % 2 == 0 ? "even" : "odd")} key={index} style={{ minHeight: minHeight(message.content)}}>
+                    <div className='sender'>
+                      {message.sender.charAt(0).toUpperCase() + message.sender.slice(1) + ':'}
+                    </div>
+
+                    <span className="text" >
+                      {message.content}
+                    </span>
+                  </div>
+                )
               })
-            }
-            {
-              getWaiting()
             }
           </div>
           <input ref={inputRef} type="text" id="1" onKeyDown={sendMessage}></input>
@@ -90,34 +92,5 @@ const Chatbox: FC<ChatboxProps> = () => {
     </div>
   )
 }
-
-interface ListElementProp {
-  message: Message;
-  index: number;
-  waiting?: boolean;
-}
-
-export const ListElement: FC<ListElementProp> = (prop:ListElementProp) => {
-  const { message, index ,waiting} = prop;
-  const minHeight = (message: string) => {
-    console.log("message.length:" + message.length)
-    if (message.length < 100) {
-      return 60;
-    }
-    return Math.ceil(message.length / 17) * 6
-  }
-  return (
-    <div className={"chat-list-item " + (index % 2 == 0 ? "even" : "odd")} key={index} style={{ minHeight: minHeight(message.content) }}>
-      <div className='sender'>
-        {message.sender.charAt(0).toUpperCase() + message.sender.slice(1) + ':'}
-      </div>
-
-      <span className={`text ${waiting?"box":''}`} >
-        {message.content}
-      </span>
-    </div>
-  )
-}
-
 
 export default Chatbox;

@@ -51,14 +51,11 @@ export const getResponse = async (messages: Message[]): Promise<string> => {
     body: raw,
   };
 
-  // let res = await fetch("https://irvingouj.azurewebsites.net/api/service/chat?code=W3doon5dJNOfnMiJdsV3eLPtCkUDZmV7dbeFoxzP6vJNAzFuh6KVPg==", requestOptions)
-  // let data = await res.json()
-  // console.log(data)
+  let res = await fetch("https://irvingouj.azurewebsites.net/api/service/chat?code=W3doon5dJNOfnMiJdsV3eLPtCkUDZmV7dbeFoxzP6vJNAzFuh6KVPg==", requestOptions)
+  let data = await res.json()
+  console.log(data)
 
-  // return data.response;
+  return data.response;
   
-  let res = await fetch("https://httpstat.us/504?sleep=60000")
-  
-
-  return "test";
+  // return knowledgeBase;
 }
