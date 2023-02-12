@@ -77,3 +77,16 @@ input{
 .even{
     background-color: #f3f6fb;
 }
+
+@keyframes cursor-blink {
+    from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+}
+
+.box {
+    animation: 1s blink step-end infinite;
+}
