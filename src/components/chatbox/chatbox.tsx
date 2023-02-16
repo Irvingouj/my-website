@@ -5,18 +5,19 @@ import './chatbox.css';
 interface ChatboxProps { }
 
 
-
+const widthPerChar = 11.1;
 const Chatbox: FC<ChatboxProps> = () => {
   const [messages, setMessages] = useState<Message[]>([{ content: "Hello,is there anything you wanna know about me?", sender: "me" }]);
   const [inputFinished, setInputFinished] = useState<boolean>(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const chatboxRef = React.useRef<HTMLDivElement>(null);
+  const listRef = React.useRef<Map<number,HTMLDivElement>|null>(null);
 
 
   const sendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const newMessage = {
-        content: e.currentTarget.value,
+        content: inputRef.current!.value,
         sender: "you"
       }
       setMessages([...messages, newMessage]);
@@ -27,17 +28,14 @@ const Chatbox: FC<ChatboxProps> = () => {
 
   useEffect(() => {
 
-    async function getResponseFromServer(message: string) {
-      console.log("message:" + message);
-      const res = await getResponse(messages);
-
-      setMessages([...messages, { content: res, sender: "Me" }]);
-      setInputFinished(false);
-    }
-
-
     if (!inputFinished) {
       return
+    }
+
+    async function getResponseFromServer(message: string) {
+      const res = await getResponse(messages);
+      setMessages([...messages, { content: res, sender: "Me" }]);
+      setInputFinished(false);
     }
 
     try {
@@ -48,21 +46,36 @@ const Chatbox: FC<ChatboxProps> = () => {
 
   }, [inputFinished])
 
+  const minHeight = (div:  HTMLDivElement | undefined) => {
+    if (!div) { return 60 }
+    let wordHeight = 232/8;
+    let wordWidth = 1110/79;
 
-  useEffect(() => {
+    const height = div.offsetHeight;
+    const width = div.offsetWidth - 60;
+
+    const wordCount = div.innerText.length;
+    const wordCountPerLine = Math.floor(width / wordWidth);
+    const lineCount = Math.ceil(wordCount / wordCountPerLine);
+
+    setTimeout(() => {
+      scrollToBottom();
+    }, 10);
+    return Math.max(height, lineCount * wordHeight+20);
+  }
+
+  const scrollToBottom = () => {
     if (chatboxRef.current) {
       chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
     }
-    console.log("messages:" + messages)
-  }, [messages])
-
-  const minHeight = (message:string) => {
-    if(message.length < 17){
-      return 60;
-    }
-    return Math.ceil(message.length/17) * 6
   }
 
+  const getMap = () => {
+    if(!listRef.current){
+      listRef.current = new Map<number,HTMLDivElement>();
+    }
+    return listRef.current;
+  }
 
   return (
     <div className="zuopin2" id="Chat">
@@ -72,7 +85,19 @@ const Chatbox: FC<ChatboxProps> = () => {
             {
               messages.map((message, index) => {
                 return (
-                  <div className={"chat-list-item " + (index % 2 == 0 ? "even" : "odd")} key={index} style={{ minHeight: minHeight(message.content)}}>
+                  <div ref={ref =>
+                    {
+                      const map = getMap();
+                      if(ref){
+                        map.set(index,ref);
+                      }else{
+                        map.delete(index);
+                      }
+                    }
+                  } 
+                  className={"chat-list-item " + (index % 2 == 0 ? "even" : "odd")} 
+                  key={index}
+                  style={{ minHeight: minHeight(getMap().get(index))}}>
                     <div className='sender'>
                       {message.sender.charAt(0).toUpperCase() + message.sender.slice(1) + ':'}
                     </div>
@@ -85,7 +110,7 @@ const Chatbox: FC<ChatboxProps> = () => {
               })
             }
           </div>
-          <input ref={inputRef} type="text" id="1" onKeyDown={sendMessage}></input>
+          <input disabled={inputFinished} ref={inputRef} type="text" id="1" onKeyDown={sendMessage}></input>
         </div>
         <div className="clear"></div>
       </div>
