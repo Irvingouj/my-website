@@ -19,6 +19,7 @@ I am currently working as a Teaching Assistant in Data Structures.
 
 
 export const getResponse = async (messages: Message[]): Promise<string> => {
+  
   let prompt = messages.reduce((acc, message) => {
     return `${acc}\n${message.sender}: ${message.content}`;
   }, knowledgeBase);
@@ -57,5 +58,4 @@ export const getResponse = async (messages: Message[]): Promise<string> => {
 
   return data.response;
   
-  // return knowledgeBase;
 }
