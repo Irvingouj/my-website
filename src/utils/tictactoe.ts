@@ -85,7 +85,7 @@ export const ComputerPlay = (board:GameBoard,computerPiece:SquareValue): number 
   const computer = computerPiece;
   const human = computer === 'X' ? 'O' : 'X';
   const emptySquares = board.squares.map((square,index) => square===null? index:null).filter(index => index !== null);
-
+  
   // if center is empty, take it
   if (board.squares[4] === null) return 4;
 
