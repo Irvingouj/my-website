@@ -51,10 +51,9 @@ const Board: FC<BoardProps> = (prop: BoardProps) => {
         if (!ctx) return;
         const { winner,finishPosition } = prop.result!;
         const [start, end] = finishPosition!;
-        const [post1,pos2] = winningLineEndPosition(start, end);
-        
+        const [pos1,pos2] = winningLineEndPosition(start, end);
         animationId.current = requestAnimationFrame(() => {
-            drawPath(post1,pos2)
+            drawPath(pos1,pos2)
         });
         
     }, [prop.result?.finished]);
@@ -210,8 +209,8 @@ function winningLineEndPosition(block1: number, block2: number): [Position, Posi
     let offset = 100;
     // if the blocks are vertical 
     if (block_1_center.x === block_2_center.x) {
-        block_1_center = { x: block_1_center.x, y: block_1_center.y + offset };
-        block_2_center = { x: block_2_center.x, y: block_2_center.y - offset };
+        block_1_center = { x: block_1_center.x, y: block_1_center.y - offset };
+        block_2_center = { x: block_2_center.x, y: block_2_center.y + offset };
         return [block_1_center, block_2_center];
     }
 
