@@ -29,6 +29,7 @@ const Chatbox: FC<ChatboxProps> = () => {
   useEffect(() => {
 
     if (!inputFinished) {
+      inputRef.current?.focus();
       return
     }
 
