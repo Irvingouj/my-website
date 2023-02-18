@@ -15,9 +15,10 @@ export interface GameBoard {
   squares: [SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue, SquareValue];
 }
 
-export const DefaultGameBoard: GameBoard = {
-  squares: [null, null, null, null, null, null, null, null, null],
+export const DefaultGameBoard = ():GameBoard =>{
+ return {squares: [null, null, null, null, null, null, null, null, null]}
 };
+
 
 // check if a player has won
 export const PlayerWins = (board: Array<SquareValue>, player: Player): boolean => {
@@ -44,8 +45,14 @@ export const XWins = (board: Array<SquareValue>): boolean => {
   return PlayerWins(board, 'X');
 }
 
-export function DrawBoard(ctx: CanvasRenderingContext2D) {
+const whoWins = (board: Array<SquareValue>): Player | 'draw' | null => {
+  if (PlayerWins(board, 'X')) return 'X';
+  else if (PlayerWins(board, 'O')) return 'O';
+  else if (board.every((square) => square !== null)) return 'draw';
+  else return null;
+}
 
+export function DrawBoard(ctx: CanvasRenderingContext2D) {
 
   var width = ctx.canvas.width - 200;
   var height = ctx.canvas.height;
@@ -73,6 +80,8 @@ export function DrawBoard(ctx: CanvasRenderingContext2D) {
   ctx.lineTo(width + 100, 2 * height / 3);
   ctx.stroke();
 
+ 
+
 }
 
 export const OffBoard = (x: number, y: number): boolean => {
@@ -85,7 +94,7 @@ export const ComputerPlay = (board:GameBoard,computerPiece:SquareValue): number 
   const computer = computerPiece;
   const human = computer === 'X' ? 'O' : 'X';
   const emptySquares = board.squares.map((square,index) => square===null? index:null).filter(index => index !== null);
-
+  
   // if center is empty, take it
   if (board.squares[4] === null) return 4;
 
@@ -120,8 +129,19 @@ export const ComputerPlay = (board:GameBoard,computerPiece:SquareValue): number 
 
 }
 
-export const IsGameOver = (board: GameBoard): boolean => {
-  return GameOver(board.squares);
+export type Result = {
+  finished: boolean;
+  winner: Player | 'draw' | null;
+  finishPosition?: [number, number];
+}
+
+export const IsGameOver = (board:GameBoard):Result => {
+  if (!GameOver(board.squares)) return {finished: false, winner: null};
+ return {
+    finished: true,
+    winner: whoWins(board.squares),
+    finishPosition: GetWinnerLine(board)
+ }
 }
 
 export const GetWinnerLine = (board: GameBoard): [number,number] => {
