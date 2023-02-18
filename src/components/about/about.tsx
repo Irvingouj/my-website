@@ -21,8 +21,7 @@ const About: FC<AboutProps> = () => (
 				</p>
 				<br />
 				<p>
-					play a game with me!  <br />
-					draw circle please! I am working on text recognition of what you drawing, but it is not ready yet. <br />
+					play a game with me! 
 				</p>
 			</div>
 			<div className="pc_fr img"><img src="selfie.png" /></div>
