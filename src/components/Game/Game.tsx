@@ -39,7 +39,6 @@ const Game: FC<GameProps> = () => {
     if (turnRef.current === computerPiece && !IsGameOver(board).finished) {
       computersTurn();
     }
-
     else if(IsGameOver(board).finished){
       setTimeout(() => {
         setResult(IsGameOver(board));
