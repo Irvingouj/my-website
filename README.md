@@ -1,3 +1,5 @@
+# This Project is Archived, a new website built on top of Next.js and Tailwind css will soon be available
+
 # Welcome to my website github repo
 
 This website is deployed, [Link is here](https://irvingouj.com/).
